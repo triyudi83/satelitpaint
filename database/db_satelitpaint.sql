@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2021 at 05:14 PM
+-- Generation Time: Aug 09, 2021 at 06:16 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -43,7 +43,7 @@ CREATE TABLE `id_dtlresep` (
 CREATE TABLE `tb_akses` (
   `id_akses` int(11) NOT NULL,
   `id_menu` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `tipeuser` char(13) NOT NULL,
   `view` enum('1','0') NOT NULL DEFAULT '1',
   `add` enum('1','0') NOT NULL DEFAULT '0',
   `edit` enum('1','0') NOT NULL DEFAULT '0',
@@ -54,29 +54,29 @@ CREATE TABLE `tb_akses` (
 -- Dumping data for table `tb_akses`
 --
 
-INSERT INTO `tb_akses` (`id_akses`, `id_menu`, `id_user`, `view`, `add`, `edit`, `delete`) VALUES
-(175, 1, 1, '1', '1', '1', '1'),
-(176, 2, 1, '1', '1', '1', '1'),
-(177, 3, 1, '1', '1', '1', '1'),
-(178, 4, 1, '1', '1', '1', '1'),
-(179, 5, 1, '1', '1', '1', '1'),
-(180, 6, 1, '1', '1', '1', '1'),
-(181, 7, 1, '1', '1', '1', '1'),
-(182, 8, 1, '1', '1', '1', '1'),
-(183, 9, 1, '1', '1', '1', '1'),
-(184, 10, 1, '1', '1', '1', '1'),
-(185, 11, 1, '1', '1', '1', '1'),
-(186, 12, 1, '1', '1', '1', '1'),
-(187, 13, 1, '1', '1', '1', '1'),
-(188, 14, 1, '1', '1', '1', '1'),
-(189, 15, 1, '1', '1', '1', '1'),
-(190, 16, 1, '1', '1', '1', '1'),
-(191, 17, 1, '1', '1', '1', '1'),
-(192, 18, 1, '1', '1', '1', '1'),
-(193, 19, 1, '1', '1', '1', '1'),
-(194, 20, 1, '1', '1', '1', '1'),
-(195, 21, 1, '1', '1', '1', '1'),
-(196, 22, 1, '1', '1', '1', '1');
+INSERT INTO `tb_akses` (`id_akses`, `id_menu`, `tipeuser`, `view`, `add`, `edit`, `delete`) VALUES
+(1, 1, 'administrator', '1', '1', '1', '1'),
+(2, 2, 'administrator', '1', '1', '1', '1'),
+(3, 3, 'administrator', '1', '1', '1', '1'),
+(4, 4, 'administrator', '1', '1', '1', '1'),
+(5, 5, 'administrator', '1', '1', '1', '1'),
+(6, 6, 'administrator', '1', '1', '1', '1'),
+(7, 7, 'administrator', '1', '1', '1', '1'),
+(8, 8, 'administrator', '1', '1', '1', '1'),
+(9, 9, 'administrator', '1', '1', '1', '1'),
+(10, 10, 'administrator', '1', '1', '1', '1'),
+(11, 11, 'administrator', '1', '1', '1', '1'),
+(12, 12, 'administrator', '1', '1', '1', '1'),
+(13, 13, 'administrator', '1', '1', '1', '1'),
+(14, 14, 'administrator', '1', '1', '1', '1'),
+(15, 15, 'administrator', '1', '1', '1', '1'),
+(16, 16, 'administrator', '1', '1', '1', '1'),
+(17, 17, 'administrator', '1', '1', '1', '1'),
+(18, 18, 'administrator', '1', '1', '1', '1'),
+(19, 19, 'administrator', '1', '1', '1', '1'),
+(20, 20, 'administrator', '1', '1', '1', '1'),
+(21, 21, 'administrator', '1', '1', '1', '1'),
+(22, 22, 'administrator', '1', '1', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -7873,9 +7873,9 @@ INSERT INTO `tb_menu` (`id_menu`, `menu`, `kat`, `icon`, `linkmenu`, `statusmenu
 (7, 'Hak Akses', 'setting', 'fa fa-suitcase', 'setting', 'aktif'),
 (8, 'Resep', 'produksi', 'fa fa-file', 'resep', 'aktif'),
 (9, 'Produksi', 'produksi', 'fa fa-clone', 'produksi', 'aktif'),
-(10, 'Stok', 'stok', 'stok', 'fa fa-bank ', 'aktif'),
-(11, 'Mutasi Stok', 'stok', 'fa fa-archive', 'mutasi', 'aktif'),
-(12, 'Pembelian', 'transaksi', 'fa fa-truck', 'pembelian', 'aktif'),
+(10, 'Stok', 'stok', 'stok', 'fa fa-bank ', 'tidak'),
+(11, 'Stok', 'stok', 'fa fa-bank', 'stok', 'aktif'),
+(12, 'Pembelian', 'transaksi', 'fa fa-truck', 'pembelian', 'tidak'),
 (13, 'Mutasi Stok', 'stok', 'fa fa-archive', 'mutasi', 'aktif'),
 (14, 'Pembelian', 'transaksi', 'fa fa-truck', 'pembelian', 'aktif'),
 (15, 'Penjualan', 'transaksi', 'fa fa-fighter-jet', 'penjualan', 'aktif'),
@@ -8256,7 +8256,7 @@ ALTER TABLE `id_dtlresep`
 -- AUTO_INCREMENT for table `tb_akses`
 --
 ALTER TABLE `tb_akses`
-  MODIFY `id_akses` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id_akses` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1752;
 
 --
 -- AUTO_INCREMENT for table `tb_barang`
