@@ -1,5 +1,4 @@
 
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -13,80 +12,7 @@
         <li class="active">Dashboard</li>
       </ol>
     </section>
-    <?php
-    $admina = $this->db->query("select * from tb_anggota where id_anggota = '1'"); 
-              $adminv = $admina->result();
-              foreach($adminv as $adminv ){ 
-                $norekadmin = $adminv->norek;
-                $bankadmin =  $adminv->bank;
-                $tlpadmin = $adminv->tlp;
-              }
-    foreach ($downline as $downline) {
-      $down = $downline->downline;
-      // echo 'down'.$down;
-    }
-    // echo $info;
-    if($this->session->userdata('statusanggota') != 'administrator') { 
-      if($info >= $down) { ?>
-          <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> -->
-     <?php
 
-       $idlevel = $this->db->query("SELECT MAX(id_level) as id_level from tb_level");
-        $lev = $idlevel->result();
-        foreach ($lev as $lev) {  $levelmax = $lev->id_level; } 
-        $id = $this->session->userdata('id_user');
-        $a = $this->db->query("select * from tb_anggota where id_anggota = '$id'"); 
-          $b = $a->result();
-          foreach ($b as $level) { 
-            if ($level->level < $levelmax ){ 
-              $upline = $this->db->query("select * from tb_anggota inner join tb_anggota b on b.id_anggota = tb_anggota.id_upline where tb_anggota.id_anggota = '$level->id_upline'"); 
-              $uplinev = $upline->result();
-              foreach ($uplinev as $uplinev) { 
-                $up = $level->level+1;
-                $donasi = $this->db->query("select * from tb_level where id_level = '$up'"); 
-                $donasiv = $donasi->result();
-                foreach ($donasiv as $donasiv) { 
-                    $lev = $level->level+1;
-                    if($lev == 1){ ?>
-                    <div class="alert alert-danger left-icon-alert" role="alert">
-                            <h2 style="text-align: center"><strong></strong> Silahkan upgrade ke Level 1 (Supervisor) dan transfer administrasi ke admin sebesar <?php echo 'Rp. '.number_format($donasiv->nominal); ?> No Rek. <?php echo $norekadmin.' Bank '.$bankadmin.' No HP '.$tlpadmin.'</h2>
-                      </div>';
-                    } else if ($lev == 2) { ?>
-                        <div class="alert alert-danger left-icon-alert" role="alert">
-                            <h2 style="text-align: center"><strong></strong> Silahkan upgrade ke Level 2 (Manager) dan transfer administrasi ke admin  sebesar <?php echo 'Rp. '.number_format($donasiv->nominal); ?> No Rek. <?php echo $norekadmin.' Bank '.$bankadmin.' No HP '.$tlpadmin.'</h2>
-                      </div>';
-                    } else { ?>
-                        <div class="alert alert-danger left-icon-alert" role="alert">
-                            <h2 style="text-align: center"><strong></strong> Silahkan upgrade ke Level <?php echo $level->level+1 ?> dan Donasi ke upline <?php echo $uplinev->nama; ?> sebesar <?php echo 'Rp. '.number_format($donasiv->nominal); ?> No Rek. <?php echo $uplinev->norek.' Bank '.$uplinev->bank.' No HP '.$uplinev->tlp.'</h2>
-                        </div>';
-                    }
-                }
-              }
-            } 
-          }
-         ?>
-  <?php } 
-} 
-  
-    if($this->session->userdata('statusanggota') != 'administrator') { 
-       $levelk = $this->db->query("SELECT MAX(id_level) as id_level from tb_level");
-        $levelke = $levelk->result();
-        foreach ($levelke as $levelke) {  $levelmax = $levelke->id_level; } 
-    $id = $this->session->userdata('id_user');
-    $a = $this->db->query("select * from tb_anggota where id_anggota = '$id'"); 
-    $b = $a->result();
-    foreach ($b as $b) { 
-      if ($b->level == $levelmax ){ 
-        ?>
-          <div class="alert alert-danger left-icon-alert" role="alert">
-            <h2 style="text-align: center"><strong></strong> Selamat Anda telah dilevel Dana Kesejahteraan silahkan transfer ke Admin BANK BRI No Rekening 6299-01-019907-53-9 ( Atas nama TITIMMATUL HIMMAH) Sebesar Rp. 10.000.000,- dan Konfirmasi Hp No 081615879352 (admin)</h2>
-          </div>
-        <?php 
-        }
-      }
-    
-    } 
-  ?>
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -95,14 +21,14 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3><?php echo $anggota; ?></h3>
+              <h3>150</h3>
 
-              <p>Jumlah Anggota</p>
+              <p>New Orders</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">Info Selengkapnya <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -110,136 +36,480 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><?php echo $konfirmupline; ?><sup style="font-size: 20px"></sup></h3>
+              <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-              <p>Menunggu Konfirmasi Upline</p>
+              <p>Bounce Rate</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">Info Selengkapnya <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-maroon">
+          <div class="small-box bg-yellow">
             <div class="inner">
-            <h3><?php echo $konfirmadmin; ?><sup style="font-size: 20px"></sup></h3>
+              <h3>44</h3>
 
-              <p>Menunggu Konfirmasi Admin</p>
+              <p>User Registrations</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">Info Selengkapnya <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-purple">
+          <div class="small-box bg-red">
             <div class="inner">
-            <h3><?php echo $sdhbayar; ?><sup style="font-size: 20px"></sup></h3>
+              <h3>65</h3>
 
-              <p>Jumlah Sudah Bayar</p>
+              <p>Unique Visitors</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">Info Selengkapnya <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <!-- ./col -->
       </div>
-
+      <!-- /.row -->
+      <!-- Main row -->
       <div class="row">
-
-        <div class="col-md-12">
-          <!-- Info Boxes Style 2 -->
-          <div class="info-box bg-orange">
-            <!-- <span class="info-icon"><i class="ion-ios-chatbubble-outline"></i></span>
- -->
-          <?php foreach ($admin as $admin) { ?>
-            <!-- <div class="info-box-content"> -->
-              <!-- <span class="info-box-text">Data Administrator</span> -->
-              <span class="info-box-number" style="text-align: center;">No Rek Administrator : <?php echo $admin->norek ?></span>
-              <span class="info-box-number" style="text-align: center;">Bank : <?php echo $admin->bank ?></span>
-              <span class="info-box-number" style="text-align: center;">Atas Nama : <?php echo $admin->pemilik ?></span>
-
-              <div class="progress">
-                <div class="progress-bar" style="width: 100%"></div>
-              </div>
-              <span class="progress-description" style="text-align: center;">
-                    Silahkan konfirmasi jika sudah melakukan transaksi
-                  </span>
-            <!-- </div> -->
-          <?php } ?>
-            <!-- /.info-box-content -->
+        <!-- Left col -->
+        <section class="col-lg-7 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+              <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+              <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+            </ul>
+            <div class="tab-content no-padding">
+              <!-- Morris chart - Sales -->
+              <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+              <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+            </div>
           </div>
-        </div>
-      </div>
-      </section>
-      <section class="content">
-      <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">List Anggota</h3>
+          <!-- /.nav-tabs-custom -->
+
+          <!-- Chat box -->
+          <div class="box box-success">
+            <div class="box-header">
+              <i class="fa fa-comments-o"></i>
+
+              <h3 class="box-title">Chat</h3>
+
+              <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                <div class="btn-group" data-toggle="btn-toggle">
+                  <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="box-body chat" id="chat-box">
+              <!-- chat item -->
+              <div class="item">
+                <img src="dist/img/user4-128x128.jpg" alt="user image" class="online">
+
+                <p class="message">
+                  <a href="#" class="name">
+                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
+                    Mike Doe
+                  </a>
+                  I would like to meet you to discuss the latest news about
+                  the arrival of the new theme. They say it is going to be one the
+                  best themes on the market
+                </p>
+                <div class="attachment">
+                  <h4>Attachments:</h4>
+
+                  <p class="filename">
+                    Theme-thumbnail-image.jpg
+                  </p>
+
+                  <div class="pull-right">
+                    <button type="button" class="btn btn-primary btn-sm btn-flat">Open</button>
+                  </div>
+                </div>
+                <!-- /.attachment -->
+              </div>
+              <!-- /.item -->
+              <!-- chat item -->
+              <div class="item">
+                <img src="dist/img/user3-128x128.jpg" alt="user image" class="offline">
+
+                <p class="message">
+                  <a href="#" class="name">
+                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
+                    Alexander Pierce
+                  </a>
+                  I would like to meet you to discuss the latest news about
+                  the arrival of the new theme. They say it is going to be one the
+                  best themes on the market
+                </p>
+              </div>
+              <!-- /.item -->
+              <!-- chat item -->
+              <div class="item">
+                <img src="dist/img/user2-160x160.jpg" alt="user image" class="offline">
+
+                <p class="message">
+                  <a href="#" class="name">
+                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
+                    Susan Doe
+                  </a>
+                  I would like to meet you to discuss the latest news about
+                  the arrival of the new theme. They say it is going to be one the
+                  best themes on the market
+                </p>
+              </div>
+              <!-- /.item -->
+            </div>
+            <!-- /.chat -->
+            <div class="box-footer">
+              <div class="input-group">
+                <input class="form-control" placeholder="Type message...">
+
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.box (chat box) -->
+
+          <!-- TO DO List -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <i class="ion ion-clipboard"></i>
+
+              <h3 class="box-title">To Do List</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                <ul class="pagination pagination-sm inline">
+                  <li><a href="#">&laquo;</a></li>
+                  <li><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">&raquo;</a></li>
+                </ul>
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="table-responsive">
-                
-             <table id="example1" class="table table-bordered table-striped table-hover">
-                <thead>
-                <tr>
-                  <th>No</th>
-                  <th>NIK</th>
-                  <th>Nama</th>
-                  <th>Username</th>
-                  <?php if ($this->session->userdata('statusanggota') == 'administrator') { ?>
-                  <th>Password</th>
-                  <?php } ?>
-                  <th>Alamat</th>
-                  <th>Upline</th>
-                  <th>Level</th>
-                  <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php 
-                  $no=1;
-                  foreach ($listanggota as $user) { ?>
-                <tr>
-                  <td><?php echo $no++; ?></td>
-                  <td><?php echo $user->nik; ?></td>
-                  <td><?php echo $user->nama; ?></td>
-                  <td><?php echo $user->username; ?></td>
-                  
-                  <?php if ($this->session->userdata('statusanggota') == 'administrator') { ?>
-                  <td><?php echo $user->password; ?></td>
-                  <?php } ?>
-                  <td><?php echo $user->alamat.', '.$user->name_kota.', '.$user->name_prov; ?></td>
-                  <td><?php echo $user->namaupline; ?></td>
-                  <td><?php echo $user->level; ?></td>
-                  <td><?php echo $user->statusanggota; ?></td>
-                  <input type="hidden" id="id_anggota" name="id_anggota" value="<?php echo $user->id_anggota ?>">
-                </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-              </div>
-              <!-- /.table-responsive -->
+              <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+              <ul class="todo-list">
+                <li>
+                  <!-- drag handle -->
+                  <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                  <!-- checkbox -->
+                  <input type="checkbox" value="">
+                  <!-- todo text -->
+                  <span class="text">Design a nice theme</span>
+                  <!-- Emphasis label -->
+                  <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+                  <!-- General tools such as edit or delete-->
+                  <div class="tools">
+                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
+                </li>
+                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                  <input type="checkbox" value="">
+                  <span class="text">Make the theme responsive</span>
+                  <small class="label label-info"><i class="fa fa-clock-o"></i> 4 hours</small>
+                  <div class="tools">
+                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
+                </li>
+                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                  <input type="checkbox" value="">
+                  <span class="text">Let theme shine like a star</span>
+                  <small class="label label-warning"><i class="fa fa-clock-o"></i> 1 day</small>
+                  <div class="tools">
+                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
+                </li>
+                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                  <input type="checkbox" value="">
+                  <span class="text">Let theme shine like a star</span>
+                  <small class="label label-success"><i class="fa fa-clock-o"></i> 3 days</small>
+                  <div class="tools">
+                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
+                </li>
+                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                  <input type="checkbox" value="">
+                  <span class="text">Check your messages and notifications</span>
+                  <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 week</small>
+                  <div class="tools">
+                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
+                </li>
+                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                  <input type="checkbox" value="">
+                  <span class="text">Let theme shine like a star</span>
+                  <small class="label label-default"><i class="fa fa-clock-o"></i> 1 month</small>
+                  <div class="tools">
+                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
+                </li>
+              </ul>
             </div>
             <!-- /.box-body -->
+            <div class="box-footer clearfix no-border">
+              <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+            </div>
+          </div>
+          <!-- /.box -->
+
+          <!-- quick email widget -->
+          <div class="box box-info">
+            <div class="box-header">
+              <i class="fa fa-envelope"></i>
+
+              <h3 class="box-title">Quick Email</h3>
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
+                        title="Remove">
+                  <i class="fa fa-times"></i></button>
+              </div>
+              <!-- /. tools -->
+            </div>
+            <div class="box-body">
+              <form action="#" method="post">
+                <div class="form-group">
+                  <input type="email" class="form-control" name="emailto" placeholder="Email to:">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="subject" placeholder="Subject">
+                </div>
+                <div>
+                  <textarea class="textarea" placeholder="Message"
+                            style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="box-footer clearfix">
+              <button type="button" class="pull-right btn btn-default" id="sendEmail">Send
+                <i class="fa fa-arrow-circle-right"></i></button>
+            </div>
+          </div>
+
+        </section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-5 connectedSortable">
+
+          <!-- Map box -->
+          <div class="box box-solid bg-light-blue-gradient">
+            <div class="box-header">
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
+                        title="Date range">
+                  <i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                        data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+                  <i class="fa fa-minus"></i></button>
+              </div>
+              <!-- /. tools -->
+
+              <i class="fa fa-map-marker"></i>
+
+              <h3 class="box-title">
+                Visitors
+              </h3>
+            </div>
+            <div class="box-body">
+              <div id="world-map" style="height: 250px; width: 100%;"></div>
+            </div>
+            <!-- /.box-body-->
+            <div class="box-footer no-border">
+              <div class="row">
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                  <div id="sparkline-1"></div>
+                  <div class="knob-label">Visitors</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                  <div id="sparkline-2"></div>
+                  <div class="knob-label">Online</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center">
+                  <div id="sparkline-3"></div>
+                  <div class="knob-label">Exists</div>
+                </div>
+                <!-- ./col -->
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+          <!-- /.box -->
+
+          <!-- solid sales graph -->
+          <div class="box box-solid bg-teal-gradient">
+            <div class="box-header">
+              <i class="fa fa-th"></i>
+
+              <h3 class="box-title">Sales Graph</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body border-radius-none">
+              <div class="chart" id="line-chart" style="height: 250px;"></div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer no-border">
+              <div class="row">
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                  <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
+                         data-fgColor="#39CCCC">
+
+                  <div class="knob-label">Mail-Orders</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                  <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
+                         data-fgColor="#39CCCC">
+
+                  <div class="knob-label">Online</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center">
+                  <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
+                         data-fgColor="#39CCCC">
+
+                  <div class="knob-label">In-Store</div>
+                </div>
+                <!-- ./col -->
+              </div>
+              <!-- /.row -->
+            </div>
             <!-- /.box-footer -->
           </div>
+          <!-- /.box -->
+
+          <!-- Calendar -->
+          <div class="box box-solid bg-green-gradient">
+            <div class="box-header">
+              <i class="fa fa-calendar"></i>
+
+              <h3 class="box-title">Calendar</h3>
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <!-- button with a dropdown -->
+                <div class="btn-group">
+                  <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-bars"></i></button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="#">Add new event</a></li>
+                    <li><a href="#">Clear events</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">View calendar</a></li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+              </div>
+              <!-- /. tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <!--The calendar -->
+              <div id="calendar" style="width: 100%"></div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-black">
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- Progress bars -->
+                  <div class="clearfix">
+                    <span class="pull-left">Task #1</span>
+                    <small class="pull-right">90%</small>
+                  </div>
+                  <div class="progress xs">
+                    <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
+                  </div>
+
+                  <div class="clearfix">
+                    <span class="pull-left">Task #2</span>
+                    <small class="pull-right">70%</small>
+                  </div>
+                  <div class="progress xs">
+                    <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
+                  </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                  <div class="clearfix">
+                    <span class="pull-left">Task #3</span>
+                    <small class="pull-right">60%</small>
+                  </div>
+                  <div class="progress xs">
+                    <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
+                  </div>
+
+                  <div class="clearfix">
+                    <span class="pull-left">Task #4</span>
+                    <small class="pull-right">40%</small>
+                  </div>
+                  <div class="progress xs">
+                    <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+          <!-- /.box -->
+
         </section>
         <!-- right col -->
       </div>
@@ -248,4 +518,4 @@
     </section>
     <!-- /.content -->
   </div>
- 
+  <!-- /.content-wrapper -->
