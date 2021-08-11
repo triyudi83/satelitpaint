@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class C_User extends CI_Controller{
+class C_Customer extends CI_Controller{
     
     public function __construct(){
         parent::__construct();
@@ -64,8 +64,8 @@ class C_User extends CI_Controller{
         $data['akseshapus'] = $tombolhapus;
         $data['aksesedit'] = $tomboledit;
         $this->load->view('template/sidebar.php', $data);
-        $data['customer'] = $this->db->get('tb_customer')->result();
-        $this->load->view('user/v_user',$data); 
+        $data['customer'] = $this->M_Customer->getall();
+        $this->load->view('customer/v_customer',$data); 
         $this->load->view('template/footer');
     }
 
@@ -81,8 +81,9 @@ class C_User extends CI_Controller{
         $data['stok'] = $this->M_Setting->getmenustok($id);
         $data['acc'] = $this->M_Setting->getmenuacc($id);
         $data['laporan'] = $this->M_Setting->getmenulaporan($id);
+        $data['provinsi'] = $this->db->get('tb_provinsi')->result();
         $this->load->view('template/sidebar.php', $data);
-        $this->load->view('user/v_adduser',$data); 
+        $this->load->view('customer/v_addcustomer',$data); 
         $this->load->view('template/footer');
     }
 
@@ -120,8 +121,9 @@ class C_User extends CI_Controller{
         $data['acc'] = $this->M_Setting->getmenuacc($id);
         $data['laporan'] = $this->M_Setting->getmenulaporan($id);
         $this->load->view('template/sidebar.php', $data);
-        $data['customer'] = $this->M_Customer->getspek($ida);
-        $this->load->view('user/v_vuser',$data); 
+        $data['customer'] =$this->M_Customer->getspek($ida);
+        $data['provinsi'] = $this->db->get('tb_provinsi')->result();
+        $this->load->view('customer/v_vcustomer',$data); 
         $this->load->view('template/footer');
     }
 
@@ -138,12 +140,13 @@ class C_User extends CI_Controller{
         $data['acc'] = $this->M_Setting->getmenuacc($id);
         $data['laporan'] = $this->M_Setting->getmenulaporan($id);
         $this->load->view('template/sidebar.php', $data);
-        $data['customer'] =$this->db->get_where('tb_customer', ['id_user' => $iduser])->result();
-        $this->load->view('user/v_euser',$data); 
+        $data['customer'] =$this->M_Customer->getspek($iduser);
+        $data['provinsi'] = $this->db->get('tb_provinsi')->result();
+        $this->load->view('customer/v_ecustomer',$data); 
         $this->load->view('template/footer');
     }
     
-    function edituser()
+    function editc()
     {   
         $this->M_Customer->edit();
         $this->session->set_flashdata('SUCCESS', "Data Berhasil Di Rubah!!");
@@ -151,7 +154,7 @@ class C_User extends CI_Controller{
     }
 
     function hapus($id){
-        $where = array('id_user' => $id);
+        $where = array('id_customer' => $id);
 
         $this->M_Setting->delete($where,'tb_customer');
         $this->session->set_flashdata('SUCCESS', "Data Berhasil di Hapus!!");

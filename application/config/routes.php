@@ -63,3 +63,8 @@ $route['akses-kasir'] = 'C_Setting/view/kasir';
 $route['user'] = 'C_User';
 $route['user-add'] = 'C_User/add';
 $route['user-edit/(:any)'] = 'C_User/edit/$1';
+
+$route['customer'] = 'C_Customer';
+$route['customer-add'] = 'C_Customer/add';
+$route['customer-edit/(:any)'] = 'C_Customer/edit/$1';
+$route['customer-view/(:any)'] = 'C_Customer/view/$1';
