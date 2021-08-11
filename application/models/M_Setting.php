@@ -194,7 +194,8 @@ class M_Setting extends CI_Model {
         $this->db->select('*');
         $this->db->join('tb_menu', 'tb_menu.id_menu = tb_akses.id_menu');
         $where = array(
-            'tipeuser' => $ida
+            'tipeuser' => $ida,
+            'tb_menu.statusmenu' => 'aktif'
         );
         $query = $this->db->get_where('tb_akses', $where);
         return $query->result();

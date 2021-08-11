@@ -55,3 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['login'] = 'C_Login';
+
+$route['setting'] = 'C_Setting';
+$route['akses-admin'] = 'C_Setting/view/administrator';
+$route['akses-kasir'] = 'C_Setting/view/kasir';
