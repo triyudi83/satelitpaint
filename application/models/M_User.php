@@ -2,122 +2,36 @@
 
 class M_User extends CI_Model {
 
-    // function getnama($ida){
-    //     $where = array(
-    //         'id_user' => $ida
-    //     );
-    //     return $this->db->get_where('tb_user',$where)->result();
-    // }
-
-    // function gettipe($ida){
-    //     $where = array(
-    //         'id_tipeuser' => $ida
-    //     );
-    //     return $this->db->get_where('tb_tipeuser',$where)->result();
-    // }
-
-    //  function gettipeuser(){
-    //     return $this->db->get('tb_tipeuser')->result();
-    // }
-
-    // function tambahtipeuser(){
-    //     $user = array(
-    //         'tipeuser' => $this->input->post('tipeusermodal'),
-    //     );
-    //     $this->db->insert('tb_tipeuser', $user);
-
-
-    // }
-
-
-    // function tambahdata(){
-    //     $user = array(
-    //         'nopegawai' => $this->input->post('nopegawai'),
-    //         'nama' => $this->input->post('nama'),
-    //         'id_cabang' => $this->input->post('namacabang'),
-    //         'id_provinsi' => $this->input->post('prov'),
-    //         'id_kota' => $this->input->post('kota'),
-    //         'id_kecamatan' => $this->input->post('kecamatan'),
-    //         'alamat' => $this->input->post('alamat'),
-    //         'tlp' => $this->input->post('tlp'),
-    //         'jabatan' => $this->input->post('jabatan'),
-    //         'username' => $this->input->post('username'),
-    //         'password' => $this->input->post('password'),
-    //         'id_tipeuser' => $this->input->post('tipeuser'),
-    //         'tglupdate' => date('Y-m-d')
-    //     );
-        
-    //     $this->db->insert('tb_user', $user);
-    // }
-
-    // function cekkodetipeuser(){
-    //     $this->db->select_max('id_tipeuser');
-    //     $iduser = $this->db->get('tb_tipeuser');
-    //     return $iduser->row();
-    // }
-
-    // function tambahakses($id){
-    //     $total = $this->db->count_all_results('tb_submenu');
-
-    //     for($i=0; $i<$total; $i++){
-    //         $fungsi = array('id_submenu' => $i+1 , 
-    //             'id_tipeuser' => $id);
-
-    //         $this->db->insert('tb_akses', $fungsi);            
-    //     }
-    // }
-
-    // function getspek($ida){
-    //     $this->db->select('tb_user.*, tb_provinsi.name_prov, tb_kota.name_kota, tb_kecamatan.kecamatan, tb_cabang.namacabang, tb_tipeuser.*');
-    //     $this->db->join('tb_provinsi', 'tb_provinsi.id_provinsi = tb_user.id_provinsi');
-    //     $this->db->join('tb_kota', 'tb_kota.id_kota = tb_user.id_kota');
-    //     $this->db->join('tb_kecamatan', 'tb_kecamatan.id_kecamatan = tb_user.id_kecamatan');
-    //     $this->db->join('tb_cabang', 'tb_cabang.id_cabang = tb_user.id_cabang');
-    //     $this->db->join('tb_tipeuser', 'tb_tipeuser.id_tipeuser = tb_user.id_tipeuser');
-    //     $where = array(
-    //         'tb_user.id_user' => $ida
-    //     );
-    //     $query = $this->db->get_where('tb_user', $where);
-    // 	return $query->result();
-    // }
-
-    // function edit(){
-    //     $user = array(
-    //         'nama' => $this->input->post('nama'),
-    //         'id_cabang' => $this->input->post('namacabang'),
-    //         'id_provinsi' => $this->input->post('prov'),
-    //         'id_kota' => $this->input->post('kota'),
-    //         'id_kecamatan' => $this->input->post('kecamatan'),
-    //         'alamat' => $this->input->post('alamat'),
-    //         'tlp' => $this->input->post('tlp'),
-    //         'jabatan' => $this->input->post('jabatan'),
-    //         'username' => $this->input->post('username'),
-    //         'password' => $this->input->post('password'),
-    //         'tglupdate' => date('Y-m-d')
+    
+    function edit(){
+        $user = array(
+            'nama' => $this->input->post('nama'),
+            'tipeuser' => $this->input->post('tipeuser'),
+            'username' => $this->input->post('username'),
+            'tgl_update' => date('Y-m-d'), 
+            'id_userupdate' => $this->session->userdata('id_user')
             
-    //     );
+        );
 
-    //     $where = array(
-    //         'id_user' =>  $this->input->post('id'),
-    //     );
+        $where = array(
+            'id_user' =>  $this->input->post('id'),
+        );
         
-    //     $this->db->where($where);
-    //     $this->db->update('tb_user',$user);
-    // }
+        $this->db->where($where);
+        $this->db->update('tb_user',$user);
+    }
 
-    // function edittipeuser(){
-    //     $user = array(
-    //         'tipeuser' => $this->input->post('tipeusermodal'),
-            
-    //     );
-
-    //     $where = array(
-    //         'id_tipeuser' =>  $this->input->post('idtipeuser'),
-    //     );
+    function tambahdata(){
+        $user = array(
+            'nama' => $this->input->post('nama'),
+            'tipeuser' => $this->input->post('tipeuser'),
+            'username' => $this->input->post('username'),
+            'password' => md5($this->input->post('password')),
+            'tgl_update' => date('Y-m-d'), 
+            'id_userupdate' => $this->session->userdata('id_user')
+        );
         
-    //     $this->db->where($where);
-    //     $this->db->update('tb_tipeuser',$user);
-    // }
-
+        $this->db->insert('tb_user', $user);
+    }
    
 }

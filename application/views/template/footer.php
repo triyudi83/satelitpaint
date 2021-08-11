@@ -294,5 +294,39 @@ function toggle(source) {
       return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
     }
   </script>
+
+
+<script type='text/javascript'>
+    var error = 1; // nilai default untuk error 1
+    function cek_username(){
+        $("#pesanusername").hide();
+        var username = $("#username").val();
+            $.ajax({
+              url: "<?php echo base_url("index.php/C_User/cek_username"); ?>", //arahkan pada proses_tambah di controller member
+                data: 'username='+username,
+                type: "POST",
+                success: function(msg){
+                    if(msg==1){
+                        $("#pesanusername").css("color","#fc5d32");
+                        $("#namapanggilan").css("border-color","#fc5d32");
+                        $("#pesanusername").html("Username sudah digunakan !");
+                        $("#makkarakter").html("");
+                        $("#tambah").disabled();
+ 
+                        $("#namapanggilan").val("");
+                        error = 1;
+                    }else{
+                        $("#pesanusername").css("color","#59c113");
+                        $("#namapanggilan").css("border-color","#59c113");
+                        $("#pesanusername").html("");
+                        error = 0;
+                    }
+ 
+                    $("#pesanusername").fadeIn(1000);
+                }
+            });               
+    }
+     
+</script>
 </body>
 </html>

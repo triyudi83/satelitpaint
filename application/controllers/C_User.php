@@ -82,45 +82,14 @@ class C_User extends CI_Controller{
         $data['acc'] = $this->M_Setting->getmenuacc($id);
         $data['laporan'] = $this->M_Setting->getmenulaporan($id);
         $this->load->view('template/sidebar.php', $data);
-        $modul = 'staf';
-        $kode = $this->M_Setting->cekkode($modul);
-        foreach ($kode as $modul) {
-            $a = $modul->kodefinal;
-            date_default_timezone_set('Asia/Jakarta');
-            $tgl = date('dmY');
-            $a = str_replace("tanggal", $tgl, $a);
-            $data = $this->M_User->getuser();
-            $id = count($data)+1;
-            $a = str_replace("no", $id, $a);
-        }
-        $idnama = $this->session->userdata('nama');
-        $name = str_replace("username", $idnama, $a);
-        $data['kode'] = $name;
-        $data['provinsi'] = $this->M_Setting->getprovinsi();
-        $data['cabang'] = $this->M_Setting->getcabangss();
-        $data['tipeuser'] = $this->M_User->gettipeuser();
-        $this->load->view('user/v_adduser', $data); 
-        $this->load->view('user/v_modal');
+        $this->load->view('user/v_adduser',$data); 
         $this->load->view('template/footer');
     }
 
-    function cek_user(){
-        $tabel = 'tb_staf';
+    function cek_username(){
+        $tabel = 'tb_user';
         $cek = 'username';
-        $kode = $this->input->post('user');
-        $hasil_kode = $this->M_Setting->cek($cek,$kode,$tabel);
-        if(count($hasil_kode)!=0){ 
-            echo '1';
-        }else{
-            echo '2';
-        }
-         
-    }
-
-    function cek_kodeuser(){
-        $tabel = 'tb_staf';
-        $cek = 'nopegawai';
-        $kode = $this->input->post('nopegawai');
+        $kode = $this->input->post('username');
         $hasil_kode = $this->M_Setting->cek($cek,$kode,$tabel);
         if(count($hasil_kode)!=0){ 
             echo '1';
@@ -134,55 +103,8 @@ class C_User extends CI_Controller{
     {   
         $this->M_User->tambahdata();
 
-        $id = $this->session->userdata('id_user');
-        $id_submenu = '1';
-        $ket = 'tambah data staf';
-        $this->M_Setting->userlog($id, $id_submenu, $ket);
-
         $this->session->set_flashdata('SUCCESS', "Record Added Successfully!!");
-        redirect('C_User');
-    }
-
-    public function tambahtipeuser()
-    {   
-        $this->M_User->tambahtipeuser();
-        $data = $this->M_User->cekkodetipeuser();
-        foreach ($data as $id) {
-            $id = $id;
-            $this->M_User->tambahakses($id);
-        }
-
-        $id = $this->session->userdata('id_user');
-        $id_submenu = '2';
-        $ket = 'tambah data tipe user';
-        $this->M_Setting->userlog($id, $id_submenu, $ket);
-
-        $data = $this->M_User->gettipeuser();
-            $lists = "<option value=''>Pilih</option>";
-        foreach($data as $data){
-              $lists .= "<option value=".$data->id_tipeuser.">".$data->tipeuser."</option>"; // Tambahkan tag option ke variabel $lists
-            }
-        $callback = array('list_tipeuser'=>$lists); // Masukan variabel lists tadi ke dalam array $callback dengan index array : list_kota
-        echo json_encode($callback); // konversi varibael $callback menjadi JSON
-
-    }
-
-    public function tambahtipeuserindex(){   
-        $this->M_User->tambahtipeuser();
-        
-        $data = $this->M_User->cekkodetipeuser();
-        foreach ($data as $id) {
-            $id = $id;
-            $this->M_User->tambahakses($id);
-        }
-
-        $id = $this->session->userdata('id_user');
-        $id_submenu = '2';
-        $ket = 'tambah data tipe user';
-        $this->M_Setting->userlog($id, $id_submenu, $ket);
-
-        $this->session->set_flashdata('SUCCESS', "Record Added Successfully!!");
-        redirect('C_User/tipeuser');
+        redirect('user');
     }
 
     function view($ida)
@@ -216,10 +138,7 @@ class C_User extends CI_Controller{
         $data['acc'] = $this->M_Setting->getmenuacc($id);
         $data['laporan'] = $this->M_Setting->getmenulaporan($id);
         $this->load->view('template/sidebar.php', $data);
-        $data['provinsi'] = $this->M_Setting->getprovinsi();
-        $data['cabang'] = $this->M_Setting->getcabangss();
-        $data['tipeuser'] = $this->M_User->gettipeuser();
-        $data['user'] = $this->M_User->getspek($iduser);
+        $data['user'] =$this->db->get_where('tb_user', ['id_user' => $iduser])->result();
         $this->load->view('user/v_euser',$data); 
         $this->load->view('template/footer');
     }
@@ -246,53 +165,16 @@ class C_User extends CI_Controller{
     function edituser()
     {   
         $this->M_User->edit();
-
-        $id = $this->session->userdata('id_user');
-        $id_submenu = '2';
-        $ket = 'edit data user';
-        $this->M_Setting->userlog($id, $id_submenu, $ket);
-
         $this->session->set_flashdata('SUCCESS', "Record Update Successfully!!");
-        redirect('C_User');
-    }
-
-    function edittipeuser()
-    {   
-        $this->M_User->edittipeuser();
-
-        $id = $this->session->userdata('id_user');
-        $id_submenu = '2';
-        $ket = 'edit tipe user';
-        $this->M_Setting->userlog($id, $id_submenu, $ket);
-
-        $this->session->set_flashdata('SUCCESS', "Record Update Successfully!!");
-        redirect('C_User/tipeuser');
+        redirect('user');
     }
 
     function hapus($id){
         $where = array('id_user' => $id);
 
-        $ida = $this->session->userdata('id_user');
-        $id_submenu = '2';
-        $ket = 'hapus data user '.$id;
-        $this->M_Setting->userlog($ida, $id_submenu, $ket);
-
-        $this->M_Setting->delete($where,'tb_staf');
+        $this->M_Setting->delete($where,'tb_user');
         $this->session->set_flashdata('SUCCESS', "Record Delete Successfully!!");
-        redirect('C_User');
-    }
-
-    function hapustipeuser($id){
-        $where = array('id_tipeuser' => $id);
-
-        $ida = $this->session->userdata('id_user');
-        $id_submenu = '2';
-        $ket = 'hapus tipe user '.$id;
-        $this->M_Setting->userlog($ida, $id_submenu, $ket);
-
-        $this->M_Setting->delete($where,'tb_tipeuser');
-        $this->session->set_flashdata('SUCCESS', "Record Delete Successfully!!");
-        redirect('C_User/tipeuser');
+        redirect('user');
     }
 
 }

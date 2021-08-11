@@ -30,9 +30,11 @@
               <h3 class="box-title">Data User</h3>
             </div>
 
+            <?php if($aksesedit == 'aktif'){?>
             <div class="box-header">
-              <a href="<?php echo site_url('C_User/add'); ?>"><button type="button" class="btn btn-warning" >Tambah Data</button></a>
+              <a href="<?php echo site_url('user-add'); ?>"><button type="button" class="btn btn-warning" >Tambah Data</button></a>
             </div>
+          <?php } ?>
             <!-- /.box-header -->
 
             <div class="box-body">
@@ -57,11 +59,11 @@
                   <td><?php echo $user->tipeuser; ?></td>
                   <td>
                     <div class="btn-group">
-                      <a href="<?php echo site_url('user-view/'.$user->id_user); ?>"><button type="button" class="btn btn-success"><i class="fa fa-fw fa-search"></i></button></a>
+                     <!--  <a href="<?php echo site_url('user-view/'.$user->id_user); ?>"><button type="button" class="btn btn-success"><i class="fa fa-fw fa-search"></i></button></a> -->
                       <?php if($aksesedit == 'aktif'){?>
                       <a href="<?php echo site_url('user-edit/'.$user->id_user); ?>"><button type="button" class="btn btn-info"><i class="fa fa-fw fa-pencil-square-o"></i></button></a>
                     <?php } if($akseshapus == 'aktif'){ ?>
-                      <a href="<?php echo site_url('C_User/hapus/'.$user->id_user); ?>" onclick="return confirm('Yakin Hapus?')"><button type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash-o"></i></button></a>
+                      <a href="<?php echo site_url('C_User/hapus/'.$user->id_user); ?>" onclick="return confirm('Apakah Anda Yakin ?')"><button type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash-o"></i></button></a>
                     <?php } ?>
                     </div>
                   </td>

@@ -22,6 +22,16 @@ class M_Setting extends CI_Model {
         return $query->result();
     }
 
+    function cek($cek,$kode,$tabel){
+        $this->db->select('*');
+        $where = array(
+            $cek => $kode
+        );
+        $query = $this->db->get_where($tabel, $where);
+        return $query->result();
+    }
+
+
     function getkec($id){
         $this->db->select('*');
         $this->db->order_by('kecamatan', 'ASC');
