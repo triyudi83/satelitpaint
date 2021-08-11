@@ -5,7 +5,7 @@ class C_User extends CI_Controller{
         parent::__construct();
         $this->load->helper(array('form','url'));
         $this->load->library('session');
-        $this->load->model('M_User');
+        $this->load->model('M_Customer');
         $this->load->model('M_Setting');
         if(!$this->session->userdata('id_user')){
             redirect('C_Login');
@@ -16,7 +16,7 @@ class C_User extends CI_Controller{
     {
         $this->load->view('template/header');
         $id = $this->session->userdata('tipeuser');
-        $data['activeMenu'] = '1';
+        $data['activeMenu'] = '3';
         $data['master'] = $this->M_Setting->getmenumaster($id);
         $data['setting'] = $this->M_Setting->getmenusetting($id);
         $data['transaksi'] = $this->M_Setting->getmenutransaksi($id);
@@ -28,7 +28,7 @@ class C_User extends CI_Controller{
         $edit = array(
             'tipeuser' => $id,
             'edit' => '1',
-            'id_menu' => '1'
+            'id_menu' => '3'
         );
         $hasiledit = $this->M_Setting->cekakses($tabel, $edit);
         if(count($hasiledit)!=0){ 
@@ -40,7 +40,7 @@ class C_User extends CI_Controller{
         $hapus = array(
             'tipeuser' => $id,
             'delete' => '1',
-            'id_menu' => '1'
+            'id_menu' => '3'
         );
         $hasilhapus = $this->M_Setting->cekakses($tabel, $hapus);
         if(count($hasilhapus)!=0){ 
@@ -52,7 +52,7 @@ class C_User extends CI_Controller{
          $tambah = array(
             'tipeuser' => $id,
             'delete' => '1',
-            'id_menu' => '1'
+            'id_menu' => '3'
         );
         $hasiltambah = $this->M_Setting->cekakses($tabel, $hapus);
         if(count($hasiltambah)!=0){ 
@@ -64,7 +64,7 @@ class C_User extends CI_Controller{
         $data['akseshapus'] = $tombolhapus;
         $data['aksesedit'] = $tomboledit;
         $this->load->view('template/sidebar.php', $data);
-        $data['user'] = $this->db->get('tb_user')->result();
+        $data['customer'] = $this->db->get('tb_customer')->result();
         $this->load->view('user/v_user',$data); 
         $this->load->view('template/footer');
     }
@@ -73,7 +73,7 @@ class C_User extends CI_Controller{
     {
         $this->load->view('template/header');
         $id = $this->session->userdata('tipeuser');
-        $data['activeMenu'] = '1';
+        $data['activeMenu'] = '3';
         $data['master'] = $this->M_Setting->getmenumaster($id);
         $data['setting'] = $this->M_Setting->getmenusetting($id);
         $data['transaksi'] = $this->M_Setting->getmenutransaksi($id);
@@ -87,7 +87,7 @@ class C_User extends CI_Controller{
     }
 
     function cek_username(){
-        $tabel = 'tb_user';
+        $tabel = 'tb_customer';
         $cek = 'username';
         $kode = $this->input->post('username');
         $hasil_kode = $this->M_Setting->cek($cek,$kode,$tabel);
@@ -101,17 +101,17 @@ class C_User extends CI_Controller{
 
     public function tambah()
     {   
-        $this->M_User->tambahdata();
+        $this->M_Customer->tambahdata();
 
-        $this->session->set_flashdata('SUCCESS', "Record Added Successfully!!");
-        redirect('user');
+        $this->session->set_flashdata('SUCCESS', "Data Berhasil Di Tambahkan!!");
+        redirect('customer');
     }
 
     function view($ida)
     {
         $this->load->view('template/header');
         $id = $this->session->userdata('tipeuser');
-        $data['activeMenu'] = '1';
+        $data['activeMenu'] = '3';
         $data['master'] = $this->M_Setting->getmenumaster($id);
         $data['setting'] = $this->M_Setting->getmenusetting($id);
         $data['transaksi'] = $this->M_Setting->getmenutransaksi($id);
@@ -120,7 +120,7 @@ class C_User extends CI_Controller{
         $data['acc'] = $this->M_Setting->getmenuacc($id);
         $data['laporan'] = $this->M_Setting->getmenulaporan($id);
         $this->load->view('template/sidebar.php', $data);
-        $data['user'] = $this->M_User->getspek($ida);
+        $data['customer'] = $this->M_Customer->getspek($ida);
         $this->load->view('user/v_vuser',$data); 
         $this->load->view('template/footer');
     }
@@ -129,7 +129,7 @@ class C_User extends CI_Controller{
     {
         $this->load->view('template/header');
         $id = $this->session->userdata('tipeuser');
-        $data['activeMenu'] = '1';
+        $data['activeMenu'] = '3';
         $data['master'] = $this->M_Setting->getmenumaster($id);
         $data['setting'] = $this->M_Setting->getmenusetting($id);
         $data['transaksi'] = $this->M_Setting->getmenutransaksi($id);
@@ -138,23 +138,24 @@ class C_User extends CI_Controller{
         $data['acc'] = $this->M_Setting->getmenuacc($id);
         $data['laporan'] = $this->M_Setting->getmenulaporan($id);
         $this->load->view('template/sidebar.php', $data);
-        $data['user'] =$this->db->get_where('tb_user', ['id_user' => $iduser])->result();
+        $data['customer'] =$this->db->get_where('tb_customer', ['id_user' => $iduser])->result();
         $this->load->view('user/v_euser',$data); 
         $this->load->view('template/footer');
     }
+    
     function edituser()
     {   
-        $this->M_User->edit();
+        $this->M_Customer->edit();
         $this->session->set_flashdata('SUCCESS', "Data Berhasil Di Rubah!!");
-        redirect('user');
+        redirect('customer');
     }
 
     function hapus($id){
         $where = array('id_user' => $id);
 
-        $this->M_Setting->delete($where,'tb_user');
+        $this->M_Setting->delete($where,'tb_customer');
         $this->session->set_flashdata('SUCCESS', "Data Berhasil di Hapus!!");
-        redirect('user');
+        redirect('customer');
     }
 
 }
