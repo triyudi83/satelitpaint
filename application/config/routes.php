@@ -59,3 +59,6 @@ $route['login'] = 'C_Login';
 $route['setting'] = 'C_Setting';
 $route['akses-admin'] = 'C_Setting/view/administrator';
 $route['akses-kasir'] = 'C_Setting/view/kasir';
+
+$route['user'] = 'C_User';
+$route['user-edit/(:any)'] = 'C_User/edit/$1';
